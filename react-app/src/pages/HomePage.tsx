@@ -1,5 +1,6 @@
+import SearchBar from '../components/SearchBar';
 import React from 'react';
-import SearchBar from 'components/SearchBar';
+
 class HomePage extends React.Component {
   render() {
     return (

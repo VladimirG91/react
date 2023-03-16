@@ -10,9 +10,20 @@ interface State {
 class SearchBar extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { value: '' };
+    this.state = { value: localStorage.getItem('searchValue') || '' };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount(): void {
+    const searchValue = localStorage.getItem('searchValue');
+    if (searchValue) {
+      this.setState({ value: searchValue });
+    }
+  }
+
+  componentWillUnmount(): void {
+    localStorage.setItem('searchValue', this.state.value);
   }
 
   handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -20,7 +31,7 @@ class SearchBar extends React.Component<Props, State> {
   }
 
   handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    alert('Искомое значение: ' + this.state.value);
+    localStorage.setItem('searchValue', this.state.value);
     event.preventDefault();
   }
 

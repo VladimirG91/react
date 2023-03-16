@@ -13,9 +13,12 @@
     "skipLibCheck": true,
     "baseUrl": "./src",
     "resolveJsonModule": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "paths": {
+      "@components/*": ["./src/components/*"]
+    }
   },
   // "include": ["src", ".eslintrc.cjs"],
-  "include": ["./src/**/*", "styled.d.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["./src/**/*", "styled.d.ts"]
+  // "references": [{ "path": "./tsconfig.node.json" }]
 }
