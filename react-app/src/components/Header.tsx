@@ -1,12 +1,26 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 class Header extends React.Component {
   render() {
     return (
-      <header>
-        <Link to="/">Home Page</Link>
-        <Link to="/about">About Us</Link>
-        <Link to="*"></Link>
+      <header className="header">
+        <NavLink to="*"></NavLink>
+        <NavLink
+          to="/"
+          style={({ isActive }) =>
+            isActive ? { color: '#1d9bf0', outline: 'none' } : { color: 'white' }
+          }
+        >
+          Home Page
+        </NavLink>
+        <NavLink
+          to="/about"
+          style={({ isActive }) =>
+            isActive ? { color: '#1d9bf0', outline: 'none' } : { color: 'white' }
+          }
+        >
+          About Us
+        </NavLink>
       </header>
     );
   }
