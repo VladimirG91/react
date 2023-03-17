@@ -543,6 +543,11 @@ body {
   font-family: 'Andika', 'Roboto';
   font-style: normal;
   font-weight: 400;
+  background: url('../public/bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  color: white;
 }
 .wrapper {
   max-width: 1160px;
@@ -564,12 +569,15 @@ a:hover {
 .form-input {
   background-image: url(/public/search.svg);
   background-repeat: no-repeat;
-  background-size: 20px 28px;
-  padding-left: 24px;
+  background-size: 24px 28px;
+  padding-left: 30px;
   margin-right: 10px;
   width: 400px;
   border-radius: 15px;
   border-color: gray;
+  background-color: transparent;
+  color: white;
+  padding-bottom: 4px;
 }
 
 .form-input:focus,
@@ -579,7 +587,7 @@ a:hover {
 
 .card {
   position: relative;
-  border: 1px solid rgb(199, 199, 212);
+  border: 1px solid rgb(199 199 212 / 12%);
   width: 230px;
   height: 450px;
 }
@@ -598,13 +606,14 @@ a:hover {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 .form-search {
   display: flex;
   justify-content: center;
-  padding: 45px;
-  border-bottom: 0.5px solid #c0c0c0;
+  padding: 30px;
+  border-bottom: 0.5px solid #c0c0c01f;
   margin-bottom: 10px;
 }
 
@@ -616,6 +625,7 @@ a:hover {
   justify-content: center;
   align-items: center;
   background-color: #141414;
+  margin-bottom: 10px;
 }
 
 .form-btn {
@@ -628,7 +638,29 @@ a:hover {
 }
 .form-btn:hover,
 .form-btn:active {
-  background-color: white;
-  color: #1d9bf0;
+  background-color: transparent;
+  color: white;
   border: 2px solid #1d9bf0;
+}
+
+.home,
+.about {
+  display: flex;
+  justify-content: center;
+}
+
+.not-found {
+  display: flex;
+  justify-content: center;
+  margin-top: 38%;
+  font-size: 40px;
+}
+
+.not-found-span {
+  color: #1d9bf0;
+}
+
+/*Убрать полосу прокрутки для всей страницы*/
+::-webkit-scrollbar {
+  width: 0;
 }

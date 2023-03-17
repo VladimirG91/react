@@ -6,7 +6,10 @@ class NotFoundPage extends React.Component {
       <div className="wrapper">
         <div className="not-found">
           <p>
-            PAGE NOT FOUND. Go <Link to="/">Home Page</Link>
+            PAGE NOT FOUND. Go to{' '}
+            <Link to="/">
+              <span className="not-found-span">Home Page</span>
+            </Link>
           </p>
         </div>
       </div>
