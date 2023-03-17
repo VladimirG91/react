@@ -1,7 +1,6 @@
 import React from 'react';
 
 interface Props {
-  // imgSrc?: string;
   isLiked?: boolean;
   id?: string;
   title: string;
@@ -28,8 +27,8 @@ class Card extends React.Component<Props, State> {
     const subtitle = this.props.subtitle;
     const { id } = this.props;
     const { isLiked } = this.state;
-    const imageSrc = `../../public/cards-img/${id}.webp`;
-    const likeImgSrc = isLiked ? '../../public/liked.svg' : '../../public/unliked.svg';
+    const imageSrc = `/cards-img/${id}.webp`;
+    const likeImgSrc = isLiked ? '/liked.svg' : '/unliked.svg';
 
     return (
       <div className="card">

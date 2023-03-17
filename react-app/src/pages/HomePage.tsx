@@ -3,11 +3,6 @@ import React from 'react';
 import Card from '../components/Card';
 import data from '../components/data/data.json';
 
-interface ICard {
-  id: number;
-  title: string;
-  subtitle: string;
-}
 class HomePage extends React.Component {
   render() {
     const dataCards = data.movies;

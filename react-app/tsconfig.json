@@ -19,6 +19,6 @@
     }
   },
   // "include": ["src", ".eslintrc.cjs"],
-  "include": ["./src/**/*", "styled.d.ts"]
+  "include": ["./src/**/*", "styled.d.ts", "vite.config.ts"]
   // "references": [{ "path": "./tsconfig.node.json" }]
 }
