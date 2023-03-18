@@ -31,7 +31,7 @@ class Card extends React.Component<Props, State> {
     const likeImgSrc = isLiked ? '/liked.svg' : '/unliked.svg';
 
     return (
-      <div className="card">
+      <div className="card" data-testid="card">
         <img className="card-img" width={228} height={340} src={imageSrc} alt="card-img" />
         <p className="title">{title}</p>
         <p className="subtitle">{subtitle}</p>

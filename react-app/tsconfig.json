@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
+    "outDir": "dist",
     "target": "esnext",
-    "lib": ["dom", "esnext", "dom.iterable"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": true,
@@ -13,12 +14,9 @@
     "skipLibCheck": true,
     "baseUrl": "./src",
     "resolveJsonModule": true,
-    "jsx": "react-jsx",
-    "paths": {
-      "@components/*": ["./src/components/*"]
-    }
+    "jsx": "react-jsx"
   },
-  // "include": ["src", ".eslintrc.cjs"],
-  "include": ["./src/**/*", "styled.d.ts", "vite.config.ts"]
-  // "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src", "src/**/*.ts", "tests/**/*.ts", ".eslintrc.cjs", "vitest.config.ts"],
+  "exclude": ["node_modules", ".vscode"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
