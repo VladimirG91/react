@@ -556,6 +556,7 @@ a:hover {
   background-color: transparent;
   color: white;
   padding-bottom: 4px;
+  transition: all linear 0.3s;
 }
 
 .form-input:focus,
@@ -569,8 +570,11 @@ a:hover {
   width: 230px;
   height: 450px;
   cursor: pointer;
+  transition: all linear 0.3s;
 }
-
+.card:hover {
+  scale: 1.05;
+}
 .like-btn {
   margin: 0;
   padding: 0;
