@@ -16,7 +16,6 @@ class HomePage extends React.Component {
     ));
     return (
       <div className="wrapper">
-        <h1 className="home">Home Page</h1>
         <SearchBar />
         <div className="content">{cards}</div>
       </div>
