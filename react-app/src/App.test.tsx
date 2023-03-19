@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, getByAltText } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import NotFoundPage from './pages/NotFoundPage';
 import AboutPage from './pages/AboutPage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
