@@ -1,6 +1,6 @@
-import SearchBar from '../components/SearchBar';
+import { SearchBar } from '../components/SearchBar';
 import React from 'react';
-import Card from '../components/Card';
+import { Card } from '../components/Card';
 import data from '../components/data/data.json';
 
 class HomePage extends React.Component {
@@ -8,8 +8,8 @@ class HomePage extends React.Component {
     const dataCards = data.movies;
     const cards = [...Array(dataCards.length)].map((_, index) => (
       <Card
-        key={index}
-        id={index + 1 + ''}
+        key={dataCards[index].id}
+        id={dataCards[index].id.toString()}
         title={dataCards[index].title}
         subtitle={dataCards[index].subtitle}
       />
@@ -23,4 +23,4 @@ class HomePage extends React.Component {
   }
 }
 
-export default HomePage;
+export { HomePage };

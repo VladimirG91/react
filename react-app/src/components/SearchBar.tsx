@@ -1,14 +1,14 @@
 import React from 'react';
 
-interface Props {
+interface ISearchBarProps {
   placeholder?: string;
 }
-interface State {
+interface ISearchBarState {
   value: string;
 }
 
-class SearchBar extends React.Component<Props, State> {
-  constructor(props: Props) {
+class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
+  constructor(props: ISearchBarProps) {
     super(props);
     this.state = { value: localStorage.getItem('searchValue') || '' };
     this.handleChange = this.handleChange.bind(this);
@@ -52,4 +52,4 @@ class SearchBar extends React.Component<Props, State> {
   }
 }
 
-export default SearchBar;
+export { SearchBar };

@@ -53,7 +53,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
 
   render() {
     return (
-      <header className="header">
+      <header className="header" data-testid="header">
         <div className="current-page-header">
           <h1>{this.state.currentPageTitle}</h1>
         </div>
@@ -86,4 +86,4 @@ class Header extends React.Component<HeaderProps, HeaderState> {
   }
 }
 
-export default Header;
+export { Header };

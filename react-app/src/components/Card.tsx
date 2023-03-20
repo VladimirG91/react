@@ -16,16 +16,15 @@ class Card extends React.Component<Props, State> {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
+  private handleClick() {
     const { id } = this.props;
     const { isLiked } = this.state;
     localStorage.setItem(`isLiked-${id}`, `${!isLiked}`);
     this.setState((prevState) => ({ isLiked: !prevState.isLiked }));
   }
   render() {
-    const title = this.props.title;
-    const subtitle = this.props.subtitle;
-    const { id } = this.props;
+    const { title, subtitle, id } = this.props;
+
     const { isLiked } = this.state;
     const imageSrc = `/cards-img/${id}.webp`;
     const likeImgSrc = isLiked ? '/liked.svg' : '/unliked.svg';
@@ -43,4 +42,4 @@ class Card extends React.Component<Props, State> {
   }
 }
 
-export default Card;
+export { Card };
