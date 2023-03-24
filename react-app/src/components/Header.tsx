@@ -28,6 +28,9 @@ class Header extends React.Component<HeaderProps, HeaderState> {
       case '/about':
         currentPageTitle = 'About Us';
         break;
+      case '/form':
+        currentPageTitle = 'Form Page';
+        break;
       default:
         currentPageTitle = '';
     }
@@ -79,6 +82,17 @@ class Header extends React.Component<HeaderProps, HeaderState> {
             }}
           >
             About Us
+          </NavLink>
+          <NavLink
+            to="/form"
+            style={({ isActive }) =>
+              isActive ? { color: '#1d9bf0', outline: 'none' } : { color: 'white' }
+            }
+            onClick={() => {
+              setTimeout(this.updatePageTitle, 0);
+            }}
+          >
+            Form Page
           </NavLink>
         </div>
       </header>

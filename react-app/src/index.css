@@ -610,9 +610,10 @@ a:hover {
 }
 
 .form-btn {
-  width: 76px;
+  width: 100px;
+  height: 38px;
   background-color: #1d9bf0;
-  border: none;
+  border: 2px solid transparent;
   border-radius: 2px;
   color: white;
   padding: 0px 5px 2px 5px;
@@ -650,10 +651,12 @@ a:hover {
 .title {
   text-align: center;
 }
-.subtitle {
+.description,
+.genre,
+.viewed {
   font-size: 14px;
   margin: 0;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 2;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -672,4 +675,111 @@ a:hover {
 
 .current-page-header {
   width: 100px;
+}
+
+.form-header {
+  padding-top: 80px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+input {
+  padding-left: 10px;
+  margin-right: 10px;
+  width: 400px;
+  border-radius: 15px;
+  border-color: gray;
+  background-color: transparent;
+  color: white;
+  padding-bottom: 4px;
+  transition: all linear 0.3s;
+}
+
+input:focus,
+input:hover {
+  border-color: #1d9bf0;
+}
+
+input:required {
+  border-color: #1df063;
+  background-color: transparent;
+  color: white;
+}
+input:invalid {
+  border-color: #c00000;
+  background-color: transparent;
+  color: white;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+span {
+  width: 100px;
+  padding-right: 150px;
+  white-space: nowrap;
+}
+
+.genre {
+  width: 100px;
+  white-space: nowrap;
+}
+.genre-select {
+  padding-left: 10px;
+  margin-right: 10px;
+  width: 400px;
+  border-radius: 15px;
+}
+
+.view-vars {
+  display: flex;
+  flex-direction: column;
+  width: 84px;
+}
+
+.view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.view-span {
+  padding-right: 333px;
+}
+
+.view-radio {
+  width: 141px;
+}
+
+.form_btn {
+  display: flex;
+  margin: 20px auto;
+  width: 122px;
+  height: 37px;
+  background-color: #1d9bf0;
+  border: 2px solid transparent;
+  border-radius: 2px;
+  color: white;
+  padding: 8px 5px 2px 5px;
+  transition: all linear 0.2s;
+}
+.form_btn:hover,
+.form_btn:active {
+  background-color: transparent;
+  color: white;
+  border: 2px solid #1d9bf0;
+}
+
+.error-message {
+  position: absolute;
+  right: 140px;
+  color: red;
 }

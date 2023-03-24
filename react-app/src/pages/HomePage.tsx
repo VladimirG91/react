@@ -11,7 +11,9 @@ class HomePage extends React.Component {
         key={dataCards[index].id}
         id={dataCards[index].id.toString()}
         title={dataCards[index].title}
-        subtitle={dataCards[index].subtitle}
+        description={dataCards[index].description}
+        releaseDate={dataCards[index].releaseDate}
+        genre={dataCards[index].genre}
       />
     ));
     return (
