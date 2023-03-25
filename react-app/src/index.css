@@ -759,6 +759,10 @@ span {
   width: 141px;
 }
 
+form {
+  position: relative;
+}
+
 .form_btn {
   display: flex;
   margin: 20px auto;
@@ -770,6 +774,7 @@ span {
   color: white;
   padding: 8px 5px 2px 5px;
   transition: all linear 0.2s;
+  margin-bottom: 60px;
 }
 .form_btn:hover,
 .form_btn:active {
@@ -782,4 +787,12 @@ span {
   position: absolute;
   right: 140px;
   color: red;
+}
+
+.message {
+  position: absolute;
+  font-size: 30px;
+  bottom: -40px;
+  left: 374px;
+  color: rgb(29, 155, 240);
 }

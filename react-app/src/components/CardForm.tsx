@@ -23,6 +23,7 @@ interface CardFormState {
   errors: {
     [key: string]: string | undefined;
   };
+  message: string;
 }
 class CardForm extends React.Component<CardFormProps, CardFormState> {
   private titleRef = React.createRef<HTMLInputElement>();
@@ -37,6 +38,7 @@ class CardForm extends React.Component<CardFormProps, CardFormState> {
     super(props);
     this.state = {
       errors: {},
+      message: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -90,18 +92,42 @@ class CardForm extends React.Component<CardFormProps, CardFormState> {
 
     // Если ошибок нет, отправляем данные формы.
     onSubmit({
-      title: title?.value || '',
-      description: description?.value || '',
-      releaseDate: releaseDate?.value || '',
-      genre: genre?.value || '',
+      title: title?.value ?? '',
+      description: description?.value ?? '',
+      releaseDate: releaseDate?.value ?? '',
+      genre: genre?.value ?? '',
       notRobot: notRobot?.checked ? true : false,
       viewed: viewed?.checked ? true : false,
       image: imageFile,
     });
+    this.setState({ message: 'Card successfully added!' }, () => {
+      setTimeout(() => {
+        this.setState({ message: '' });
+      }, 3000);
+    });
+
+    if (
+      this.titleRef.current !== null &&
+      this.descriptionRef.current !== null &&
+      this.releaseDateRef.current !== null &&
+      this.releaseDateRef.current !== null &&
+      this.genreRef.current !== null &&
+      this.notRobotRef.current !== null &&
+      this.viewedRef.current !== null &&
+      this.imageRef.current !== null
+    ) {
+      this.titleRef.current.value = '';
+      this.descriptionRef.current.value = '';
+      this.releaseDateRef.current.value = '';
+      this.genreRef.current.value = '';
+      this.notRobotRef.current.checked = false;
+      this.viewedRef.current.checked = false;
+      this.imageRef.current.value = '';
+    }
   }
 
   render() {
-    const { errors } = this.state;
+    const { errors, message } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
         <MyInput
@@ -175,6 +201,7 @@ class CardForm extends React.Component<CardFormProps, CardFormState> {
         <button type="submit" className="form_btn">
           Add new Card
         </button>
+        {message && <div className="message">{message.toUpperCase()}</div>}
       </form>
     );
   }
