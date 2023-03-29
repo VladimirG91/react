@@ -1,5 +1,6 @@
 import { FormPage } from './FormPage';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { Card } from 'components/Card';
 
 describe('FormPage', () => {
   it('renders correctly', () => {
@@ -9,5 +10,8 @@ describe('FormPage', () => {
   });
   it('renders without crashing', () => {
     render(<FormPage />);
+  });
+  it('renders correctly', () => {
+    render(<Card />);
   });
 });

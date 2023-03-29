@@ -5,10 +5,6 @@ interface HeaderProps {
   currentPage?: string;
 }
 
-// interface HeaderState {
-//   currentPageTitle: string;
-// }
-
 function Header(props: HeaderProps) {
   const location = useLocation();
   const [currentPageTitle, setCurrentPageTitle] = useState<string>('');
