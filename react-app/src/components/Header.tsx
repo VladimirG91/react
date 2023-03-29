@@ -1,103 +1,82 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 
 interface HeaderProps {
   currentPage?: string;
 }
 
-interface HeaderState {
-  currentPageTitle: string;
-}
+// interface HeaderState {
+//   currentPageTitle: string;
+// }
 
-class Header extends React.Component<HeaderProps, HeaderState> {
-  constructor(props: HeaderProps) {
-    super(props);
-    this.state = {
-      currentPageTitle: '',
-    };
-  }
+function Header(props: HeaderProps) {
+  const location = useLocation();
+  const [currentPageTitle, setCurrentPageTitle] = useState<string>('');
 
-  updatePageTitle = () => {
-    const { pathname } = window.location;
-    let currentPageTitle = '';
+  const updatePageTitle = useCallback(() => {
+    const { pathname } = location;
+    let newCurrentPageTitle = '';
 
     switch (pathname) {
       case '/':
-        currentPageTitle = 'Home Page';
+        newCurrentPageTitle = 'Home Page';
         break;
       case '/about':
-        currentPageTitle = 'About Us';
+        newCurrentPageTitle = 'About Us';
         break;
       case '/form':
-        currentPageTitle = 'Form Page';
+        newCurrentPageTitle = 'Form Page';
         break;
       default:
-        currentPageTitle = '';
+        newCurrentPageTitle = '';
     }
 
-    if (this.props.currentPage) {
-      currentPageTitle = this.props.currentPage;
+    if (props.currentPage) {
+      newCurrentPageTitle = props.currentPage;
     }
 
-    this.setState({
-      currentPageTitle,
-    });
-  };
+    setCurrentPageTitle(newCurrentPageTitle);
+  }, [props.currentPage, location]);
 
-  componentDidMount() {
-    this.updatePageTitle();
-  }
-
-  componentDidUpdate(prevProps: HeaderProps) {
-    if (prevProps.currentPage !== this.props.currentPage) {
-      this.updatePageTitle();
-    }
-  }
-
-  render() {
-    return (
-      <header className="header" data-testid="header">
-        <div className="current-page-header">
-          <h1>{this.state.currentPageTitle}</h1>
-        </div>
-        <div className="header-links">
-          <NavLink
-            to="/"
-            style={({ isActive }) =>
-              isActive ? { color: '#1d9bf0', outline: 'none' } : { color: 'white' }
-            }
-            onClick={() => {
-              setTimeout(this.updatePageTitle, 0);
-            }}
-          >
-            Home Page
-          </NavLink>
-          <NavLink
-            to="/about"
-            style={({ isActive }) =>
-              isActive ? { color: '#1d9bf0', outline: 'none' } : { color: 'white' }
-            }
-            onClick={() => {
-              setTimeout(this.updatePageTitle, 0);
-            }}
-          >
-            About Us
-          </NavLink>
-          <NavLink
-            to="/form"
-            style={({ isActive }) =>
-              isActive ? { color: '#1d9bf0', outline: 'none' } : { color: 'white' }
-            }
-            onClick={() => {
-              setTimeout(this.updatePageTitle, 0);
-            }}
-          >
-            Form Page
-          </NavLink>
-        </div>
-      </header>
-    );
-  }
+  useEffect(() => {
+    updatePageTitle();
+  }, [updatePageTitle]);
+  return (
+    <header className="header" data-testid="header">
+      <div className="current-page-header">
+        <h1>{currentPageTitle}</h1>
+      </div>
+      <div className="header-links">
+        <NavLink
+          to="/"
+          style={({ isActive }) =>
+            isActive ? { color: '#1d9bf0', outline: 'none' } : { color: 'white' }
+          }
+          onClick={updatePageTitle}
+        >
+          Home Page
+        </NavLink>
+        <NavLink
+          to="/about"
+          style={({ isActive }) =>
+            isActive ? { color: '#1d9bf0', outline: 'none' } : { color: 'white' }
+          }
+          onClick={updatePageTitle}
+        >
+          About Us
+        </NavLink>
+        <NavLink
+          to="/form"
+          style={({ isActive }) =>
+            isActive ? { color: '#1d9bf0', outline: 'none' } : { color: 'white' }
+          }
+          onClick={updatePageTitle}
+        >
+          Form Page
+        </NavLink>
+      </div>
+    </header>
+  );
 }
 
 export { Header };
