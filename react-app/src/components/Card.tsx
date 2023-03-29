@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface Props {
   isLiked?: boolean;
@@ -10,60 +10,65 @@ interface Props {
   viewed?: boolean;
   image?: File;
 }
-interface State {
-  isLiked: boolean;
-  imageSrc?: string;
-}
-class Card extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    const localValue = localStorage.getItem(`isLiked-${props.id}`);
-    this.state = { isLiked: localValue ? localValue === 'true' : Boolean(props.isLiked) };
-    this.handleClick = this.handleClick.bind(this);
-  }
 
-  private handleClick() {
-    const { id } = this.props;
-    const { isLiked } = this.state;
-    localStorage.setItem(`isLiked-${id}`, `${!isLiked}`);
-    this.setState((prevState) => ({ isLiked: !prevState.isLiked }));
-  }
+const Card: React.FC<Props> = ({
+  isLiked: propIsLiked,
+  id,
+  title,
+  description,
+  releaseDate,
+  genre,
+  viewed,
+  image,
+}) => {
+  const [isLiked, setIsLiked] = useState(propIsLiked || false);
+  const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
 
-  componentDidMount() {
-    const { image, id } = this.props;
+  useEffect(() => {
+    const localValue = localStorage.getItem(`isLiked-${id}`);
+    if (localValue) {
+      setIsLiked(localValue === 'true');
+    }
+  }, [id]);
+
+  useEffect(() => {
     if (image) {
       const reader = new FileReader();
       reader.readAsDataURL(image);
       reader.onloadend = () => {
-        this.setState({ imageSrc: reader.result as string });
+        setImageSrc(reader.result as string);
       };
     } else {
       const imageSrc = `/cards-img/${id}.webp`;
-      this.setState({ imageSrc });
+      setImageSrc(imageSrc);
     }
-  }
+  }, [id, image]);
 
-  render() {
-    const { title, description, releaseDate, genre, viewed } = this.props;
-    const { isLiked, imageSrc } = this.state;
-    const likeImgSrc = isLiked ? '/liked.svg' : '/unliked.svg';
+  const handleClick = () => {
+    localStorage.setItem(`isLiked-${id}`, `${!isLiked}`);
+    setIsLiked(!isLiked);
+  };
 
-    return (
-      <div className="card" data-testid="card">
-        <img className="card-img" width={228} height={340} src={imageSrc} alt="card-img" />
-        <p className="title">
-          {title} ({releaseDate?.slice(0, 4)})
-        </p>
-        <p className="description">{description}</p>
-        <p className="genre">Genre:{genre}</p>
-        <p className="viewed">Viewed:{viewed ? 'No' : 'Yes'}</p>
-
-        <button className="like-btn" onClick={this.handleClick}>
-          <img className="like-btn-img" width={26} height={26} src={likeImgSrc} alt="like-unlike" />
-        </button>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="card" data-testid="card">
+      <img className="card-img" width={228} height={340} src={imageSrc} alt="card-img" />
+      <p className="title">
+        {title} ({releaseDate?.slice(0, 4)})
+      </p>
+      <p className="description">{description}</p>
+      <p className="genre">Genre:{genre}</p>
+      <p className="viewed">Viewed:{viewed ? 'No' : 'Yes'}</p>
+      <button className="like-btn" onClick={handleClick}>
+        <img
+          className="like-btn-img"
+          width={26}
+          height={26}
+          src={isLiked ? '/liked.svg' : '/unliked.svg'}
+          alt="like-unlike"
+        />
+      </button>
+    </div>
+  );
+};
 
 export { Card };
