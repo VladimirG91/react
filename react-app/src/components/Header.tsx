@@ -60,7 +60,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
         <div className="current-page-header">
           <h1>{this.state.currentPageTitle}</h1>
         </div>
-        <div className="header-links">
+        <nav className="header-links">
           <NavLink
             to="/"
             style={({ isActive }) =>
@@ -94,7 +94,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
           >
             Form Page
           </NavLink>
-        </div>
+        </nav>
       </header>
     );
   }
