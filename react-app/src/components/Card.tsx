@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface Props {
+interface ICardProps {
   isLiked?: boolean;
   id?: string;
   title?: string;
@@ -10,12 +10,12 @@ interface Props {
   viewed?: boolean;
   image?: File;
 }
-interface State {
+interface ICardState {
   isLiked: boolean;
   imageSrc?: string;
 }
-class Card extends React.Component<Props, State> {
-  constructor(props: Props) {
+class Card extends React.Component<ICardProps, ICardState> {
+  constructor(props: ICardProps) {
     super(props);
     const localValue = localStorage.getItem(`isLiked-${props.id}`);
     this.state = { isLiked: localValue ? localValue === 'true' : Boolean(props.isLiked) };

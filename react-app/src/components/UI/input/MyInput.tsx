@@ -8,6 +8,8 @@ interface MyInputProps {
   error?: string;
 }
 
+const REGULAR_DATE = '(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/d{4}';
+const REGULAR_TEXT = '[A-Z, a-z, А-Я, а-я]+';
 class MyInput extends React.Component<MyInputProps> {
   constructor(props: MyInputProps) {
     super(props);
@@ -22,11 +24,7 @@ class MyInput extends React.Component<MyInputProps> {
           type={type}
           name={name}
           ref={inputRef}
-          pattern={
-            type == 'date'
-              ? '(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/d{4}'
-              : '[A-Z, a-z, А-Я, а-я]+'
-          }
+          pattern={type === 'date' ? REGULAR_DATE : REGULAR_TEXT}
         />
         {error && <span className="error-message">{error}</span>}
       </label>

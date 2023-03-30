@@ -25,6 +25,8 @@ interface CardFormState {
   };
   message: string;
 }
+
+const TIMEOUT = 3000;
 class CardForm extends React.Component<CardFormProps, CardFormState> {
   private titleRef = React.createRef<HTMLInputElement>();
   private descriptionRef = React.createRef<HTMLInputElement>();
@@ -56,22 +58,22 @@ class CardForm extends React.Component<CardFormProps, CardFormState> {
     const errors: { [key: string]: string | undefined } = {};
 
     if (!title?.value) {
-      errors['title'] = 'Please enter a title';
+      errors.title = 'Please enter a title';
     }
     if (!description?.value) {
-      errors['description'] = 'Please enter a description';
+      errors.description = 'Please enter a description';
     }
     if (!releaseDate?.value) {
-      errors['releaseDate'] = 'Please enter a release date';
+      errors.releaseDate = 'Please enter a release date';
     }
     if (!genre?.value) {
-      errors['genre'] = 'Please select a genre';
+      errors.genre = 'Please select a genre';
     }
     if (notRobot === null || !notRobot.checked) {
-      errors['notRobot'] = 'Note that you are not a robot';
+      errors.notRobot = 'Note that you are not a robot';
     }
     if (!imageFile) {
-      errors['imageFile'] = 'Please add an image';
+      errors.imageFile = 'Please add an image';
     }
     if (Object.keys(errors).length > 0) {
       this.setState({ errors });
@@ -103,7 +105,7 @@ class CardForm extends React.Component<CardFormProps, CardFormState> {
     this.setState({ message: 'Card successfully added!' }, () => {
       setTimeout(() => {
         this.setState({ message: '' });
-      }, 3000);
+      }, TIMEOUT);
     });
 
     if (
