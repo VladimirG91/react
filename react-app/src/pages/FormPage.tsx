@@ -9,8 +9,8 @@ interface ICardData {
   releaseDate: string;
   genre: string;
   notRobot?: boolean;
-  viewed?: boolean;
-  image?: File | undefined;
+  viewed?: string;
+  image?: File;
 }
 
 function FormPage() {
@@ -24,7 +24,7 @@ function FormPage() {
       releaseDate = '',
       genre = '',
       notRobot = false,
-      viewed = true,
+      viewed = 'yes',
       image,
     } = data;
     const newCardData: ICardData = {

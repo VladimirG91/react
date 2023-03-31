@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { MyCheckbox } from './UI/input/MyCheckbox';
 import { MyInput } from './UI/input/MyInput';
@@ -12,149 +13,75 @@ export type CardFormFields = {
   releaseDate: string;
   genre: string;
   notRobot?: boolean;
-  viewed?: boolean;
+  viewed?: string;
   image?: File;
 };
-
 interface CardFormProps {
   onSubmit: (data: CardFormFields) => void;
 }
-
 interface CardFormState {
-  errors: {
-    [key: string]: string | undefined;
-  };
   message: string;
 }
 
 const TIMEOUT = 3000;
-
 const CardForm = ({ onSubmit }: CardFormProps) => {
-  const [errors, setErrors] = useState<CardFormState['errors']>({});
   const [message, setMessage] = useState<CardFormState['message']>('');
-  const titleRef = useRef<HTMLInputElement>(null);
-  const descriptionRef = useRef<HTMLInputElement>(null);
-  const releaseDateRef = useRef<HTMLInputElement>(null);
-  const notRobotRef = useRef<HTMLInputElement>(null);
-  const genreRef = useRef<HTMLSelectElement>(null);
-  const viewedRef = useRef<HTMLInputElement>(null);
-  const imageRef = useRef<HTMLInputElement>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<CardFormFields>({
+    mode: 'onSubmit',
+  });
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const title = titleRef.current?.value;
-    const description = descriptionRef.current?.value;
-    const releaseDate = releaseDateRef.current?.value;
-    const genre = genreRef.current?.value;
-    const notRobot = notRobotRef.current?.checked;
-    const viewed = viewedRef.current?.checked;
-    const imageFile = imageRef.current?.files?.[0];
-    const errors: { [key: string]: string | undefined } = {};
-
-    if (!title) {
-      errors.title = 'Please enter a title';
-    }
-    if (!description) {
-      errors.description = 'Please enter a description';
-    }
-    if (!releaseDate) {
-      errors.releaseDate = 'Please enter a release date';
-    }
-    if (!genre) {
-      errors.genre = 'Please select a genre';
-    }
-    if (notRobot === null || !notRobot) {
-      errors.notRobot = 'Note that you are not a robot';
-    }
-    if (!imageFile) {
-      errors.imageFile = 'Please add an image';
-    }
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors);
-      return;
-    }
-    if (Object.keys(errors).length < 1) {
-      setErrors({
-        title: '',
-        description: '',
-        notRobot: '',
-        genre: '',
-        releaseDate: '',
-        imageFile: '',
-      });
-    }
-
-    // Если ошибок нет, отправляем данные формы.
-    onSubmit({
-      title: title || '',
-      description: description || '',
-      releaseDate: releaseDate || '',
-      genre: genre || '',
-      notRobot: notRobot ? true : false,
-      viewed: viewed ? true : false,
-      image: imageFile,
-    });
+  const handleFormSubmit: SubmitHandler<CardFormFields> = (data) => {
+    onSubmit(data);
     setMessage('Card successfully added!');
     setTimeout(() => {
       setMessage('');
     }, TIMEOUT);
-
-    if (
-      titleRef.current !== null &&
-      descriptionRef.current !== null &&
-      releaseDateRef.current !== null &&
-      releaseDateRef.current !== null &&
-      genreRef.current !== null &&
-      notRobotRef.current !== null &&
-      viewedRef.current !== null &&
-      imageRef.current !== null
-    ) {
-      titleRef.current.value = '';
-      descriptionRef.current.value = '';
-      releaseDateRef.current.value = '';
-      genreRef.current.value = '';
-      notRobotRef.current.checked = false;
-      viewedRef.current.checked = false;
-      imageRef.current.value = '';
-    }
+    reset();
   };
 
-  // const { errors, message } = this.state;
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(handleFormSubmit)}>
       <MyInput
         spanName={'Title:'}
         type={'text'}
         name={'title'}
-        inputRef={titleRef}
-        error={errors['title']}
+        inputRef={register('title', { required: 'Please enter a title' })}
+        error={errors['title']?.message}
       />
       <br />
       <MyInput
         spanName={'Short description:'}
         type={'text'}
         name={'description'}
-        inputRef={descriptionRef}
-        error={errors['description']}
+        inputRef={register('description', { required: 'Please enter a description' })}
+        error={errors['description']?.message}
       />
       <br />
       <MyInput
         spanName={'Release date:'}
         type={'date'}
         name={'releaseDate'}
-        inputRef={releaseDateRef}
-        error={errors['releaseDate']}
+        inputRef={register('releaseDate', { required: 'Please enter a release date' })}
+        error={errors['releaseDate']?.message}
       />
       <br />
-      <MySelect genreRef={genreRef} error={errors['genre']} />
+      <MySelect
+        name={'genre'}
+        genreRef={register('genre', { required: 'Please select a genre' })}
+        error={errors['genre']?.message}
+      />
       <br />
       <MyCheckbox
         spanName="I am not a robot"
         type={'checkbox'}
         name={'notRobot'}
-        inputRef={notRobotRef}
-        error={errors['notRobot']}
+        inputRef={register('notRobot', { required: 'Note that you are not a robot' })}
+        error={errors['notRobot']?.message}
       />
       <br />
       <div className="view">
@@ -167,19 +94,20 @@ const CardForm = ({ onSubmit }: CardFormProps) => {
         <div className="view-radio">
           <MyRadio
             type={'radio'}
-            name={'Viewed'}
+            name={'viewed'}
             value={'yes'}
-            inputRef={viewedRef}
-            error={errors['viewed']}
+            inputRef={register('viewed')}
+            error={errors['viewed']?.message}
             isChecked={true}
           />
           <br />
           <MyRadio
             type={'radio'}
-            name={'Viewed'}
+            name={'viewed'}
             value={'no'}
-            inputRef={viewedRef}
-            error={errors['viewed']}
+            inputRef={register('viewed')}
+            error={errors['viewed']?.message}
+            isChecked={false}
           />
         </div>
       </div>
@@ -188,8 +116,8 @@ const CardForm = ({ onSubmit }: CardFormProps) => {
         spanName="Upload image"
         type="file"
         name="image"
-        imageRef={imageRef}
-        error={errors['imageFile']}
+        imageRef={register('image', { required: 'Please upload an image' })}
+        error={errors['image']?.message}
       />
       <button type="submit" className="form_btn">
         Add new Card

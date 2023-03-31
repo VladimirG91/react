@@ -1,33 +1,26 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface MySelectProps {
-  genreRef: React.RefObject<HTMLSelectElement>;
   error?: string;
+  name: string;
+  genreRef: UseFormRegisterReturn;
 }
 
-class MySelect extends React.Component<MySelectProps> {
-  constructor(props: MySelectProps) {
-    super(props);
-  }
-
-  render() {
-    const { genreRef, error } = this.props;
-    return (
-      <label>
-        <span className="genre">Genre:</span>
-        <select className="genre-select" name="genre" ref={genreRef}>
-          <option value="">Select a genre</option>
-          <option value="Action">Action</option>
-          <option value="Comedy">Comedy</option>
-          <option value="Drama">Drama</option>
-          <option value="Horror">Horror</option>
-          <option value="Romance">Romance</option>
-          <option value="Fantasy">Fantasy</option>
-        </select>
-        {error && <span className="error-message">{error}</span>}
-      </label>
-    );
-  }
-}
+const MySelect: FC<MySelectProps> = ({ name, genreRef, error }) => {
+  return (
+    <label>
+      <span>Select a genre:</span>
+      <select {...genreRef} name={name}>
+        <option value="">--Select a genre--</option>
+        <option value="comedy">Comedy</option>
+        <option value="drama">Drama</option>
+        <option value="horror">Horror</option>
+        <option value="action">Action</option>
+      </select>
+      {error && <span className="error-message">{error}</span>}
+    </label>
+  );
+};
 
 export { MySelect };

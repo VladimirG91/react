@@ -1,28 +1,22 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface MyInputProps {
   spanName?: string;
   type: string;
   name: string;
-  inputRef: React.RefObject<HTMLInputElement>;
+  inputRef: UseFormRegisterReturn;
   error?: string;
 }
 
-class MyCheckbox extends React.Component<MyInputProps> {
-  constructor(props: MyInputProps) {
-    super(props);
-  }
-
-  render() {
-    const { spanName, type, name, inputRef, error } = this.props;
-    return (
-      <label>
-        <span>{spanName}</span>
-        <input type={type} name={name} ref={inputRef} />
-        {!inputRef.current?.checked && error && <span className="error-message">{error}</span>}
-      </label>
-    );
-  }
-}
+const MyCheckbox: FC<MyInputProps> = ({ spanName, type, name, inputRef, error }) => {
+  return (
+    <label>
+      <input type={type} {...inputRef} name={name} />
+      <span>{spanName}</span>
+      {error && <span className="error-message">{error}</span>}
+    </label>
+  );
+};
 
 export { MyCheckbox };

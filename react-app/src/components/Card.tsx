@@ -7,7 +7,7 @@ interface ICardProps {
   description?: string;
   releaseDate?: string;
   genre?: string;
-  viewed?: boolean;
+  viewed?: string;
   image?: File;
 }
 
@@ -32,7 +32,7 @@ const Card: React.FC<ICardProps> = ({
   }, [id]);
 
   useEffect(() => {
-    if (image) {
+    if (image instanceof File) {
       const reader = new FileReader();
       reader.readAsDataURL(image);
       reader.onloadend = () => {

@@ -1,29 +1,28 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface MyInputProps {
   type: string;
   name: string;
-  inputRef: React.RefObject<HTMLInputElement>;
+  inputRef: UseFormRegisterReturn;
   error?: string;
   value?: string;
   isChecked?: boolean;
 }
 
-class MyRadio extends React.Component<MyInputProps> {
-  constructor(props: MyInputProps) {
-    super(props);
-  }
-
-  render() {
-    const { type, name, inputRef, error, isChecked } = this.props;
-
-    return (
-      <label>
-        <input type={type} name={name} ref={inputRef} defaultChecked={isChecked} />
-        {error && <span className="error-message">{error}</span>}
-      </label>
-    );
-  }
-}
-
+const MyRadio: FC<MyInputProps & { value: string; isChecked: boolean }> = ({
+  type,
+  name,
+  value,
+  inputRef,
+  error,
+  isChecked,
+}) => {
+  return (
+    <label>
+      <input type={type} {...inputRef} name={name} value={value} defaultChecked={isChecked} />
+      {error && <span className="error-message">{error}</span>}
+    </label>
+  );
+};
 export { MyRadio };
