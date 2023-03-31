@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-interface Props {
+interface ICardProps {
   isLiked?: boolean;
   id?: string;
   title?: string;
@@ -11,7 +11,7 @@ interface Props {
   image?: File;
 }
 
-const Card: React.FC<Props> = ({
+const Card: React.FC<ICardProps> = ({
   isLiked: propIsLiked,
   id,
   title,

@@ -42,7 +42,7 @@ function Header(props: HeaderProps) {
       <div className="current-page-header">
         <h1>{currentPageTitle}</h1>
       </div>
-      <div className="header-links">
+      <nav className="header-links">
         <NavLink
           to="/"
           style={({ isActive }) =>
@@ -70,7 +70,7 @@ function Header(props: HeaderProps) {
         >
           Form Page
         </NavLink>
-      </div>
+      </nav>
     </header>
   );
 }

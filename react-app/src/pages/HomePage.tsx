@@ -1,6 +1,8 @@
-import { SearchBar } from '../components/SearchBar';
 import React from 'react';
+
+import { SearchBar } from '../components/SearchBar';
 import { Card } from '../components/Card';
+
 import data from '../components/data/data.json';
 
 function HomePage() {

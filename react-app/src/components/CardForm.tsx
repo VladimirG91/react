@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+
 import { MyCheckbox } from './UI/input/MyCheckbox';
 import { MyInput } from './UI/input/MyInput';
 import { MyInputFile } from './UI/input/MyInputFile';
@@ -26,6 +27,8 @@ interface CardFormState {
   message: string;
 }
 
+const TIMEOUT = 3000;
+
 const CardForm = ({ onSubmit }: CardFormProps) => {
   const [errors, setErrors] = useState<CardFormState['errors']>({});
   const [message, setMessage] = useState<CardFormState['message']>('');
@@ -50,22 +53,22 @@ const CardForm = ({ onSubmit }: CardFormProps) => {
     const errors: { [key: string]: string | undefined } = {};
 
     if (!title) {
-      errors['title'] = 'Please enter a title';
+      errors.title = 'Please enter a title';
     }
     if (!description) {
-      errors['description'] = 'Please enter a description';
+      errors.description = 'Please enter a description';
     }
     if (!releaseDate) {
-      errors['releaseDate'] = 'Please enter a release date';
+      errors.releaseDate = 'Please enter a release date';
     }
     if (!genre) {
-      errors['genre'] = 'Please select a genre';
+      errors.genre = 'Please select a genre';
     }
     if (notRobot === null || !notRobot) {
-      errors['notRobot'] = 'Note that you are not a robot';
+      errors.notRobot = 'Note that you are not a robot';
     }
     if (!imageFile) {
-      errors['imageFile'] = 'Please add an image';
+      errors.imageFile = 'Please add an image';
     }
     if (Object.keys(errors).length > 0) {
       setErrors(errors);
@@ -95,7 +98,7 @@ const CardForm = ({ onSubmit }: CardFormProps) => {
     setMessage('Card successfully added!');
     setTimeout(() => {
       setMessage('');
-    }, 3000);
+    }, TIMEOUT);
 
     if (
       titleRef.current !== null &&
