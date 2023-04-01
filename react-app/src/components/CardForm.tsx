@@ -13,17 +13,21 @@ export type CardFormFields = {
   releaseDate: string;
   genre: string;
   notRobot?: boolean;
-  viewed?: string;
-  image?: File;
+  viewed?: boolean;
+  image?: FileList;
+  imageUrl: string | undefined;
 };
+
 interface CardFormProps {
   onSubmit: (data: CardFormFields) => void;
 }
+
 interface CardFormState {
   message: string;
 }
 
 const TIMEOUT = 3000;
+
 const CardForm = ({ onSubmit }: CardFormProps) => {
   const [message, setMessage] = useState<CardFormState['message']>('');
   const {
@@ -35,8 +39,10 @@ const CardForm = ({ onSubmit }: CardFormProps) => {
     mode: 'onSubmit',
   });
 
-  const handleFormSubmit: SubmitHandler<CardFormFields> = (data) => {
-    onSubmit(data);
+  const handleFormSubmit: SubmitHandler<CardFormFields> = async (data) => {
+    const { image, ...formData } = data;
+    const imageUrl = image ? URL.createObjectURL(image[0]) : undefined;
+    onSubmit({ ...formData, imageUrl });
     setMessage('Card successfully added!');
     setTimeout(() => {
       setMessage('');
@@ -96,16 +102,16 @@ const CardForm = ({ onSubmit }: CardFormProps) => {
             type={'radio'}
             name={'viewed'}
             value={'yes'}
-            inputRef={register('viewed')}
+            inputRef={register('viewed', { required: 'Please select "Yes" or "No"' })}
             error={errors['viewed']?.message}
-            isChecked={true}
+            isChecked={false}
           />
           <br />
           <MyRadio
             type={'radio'}
             name={'viewed'}
             value={'no'}
-            inputRef={register('viewed')}
+            inputRef={register('viewed', { required: 'Please select "Yes" or "No"' })}
             error={errors['viewed']?.message}
             isChecked={false}
           />

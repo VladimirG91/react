@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface MyInputProps {
@@ -12,8 +12,8 @@ interface MyInputProps {
 const MyCheckbox: FC<MyInputProps> = ({ spanName, type, name, inputRef, error }) => {
   return (
     <label>
-      <input type={type} {...inputRef} name={name} />
       <span>{spanName}</span>
+      <input type={type} {...inputRef} name={name} />
       {error && <span className="error-message">{error}</span>}
     </label>
   );

@@ -21,7 +21,7 @@ const MyRadio: FC<MyInputProps & { value: string; isChecked: boolean }> = ({
   return (
     <label>
       <input type={type} {...inputRef} name={name} value={value} defaultChecked={isChecked} />
-      {error && <span className="error-message">{error}</span>}
+      {error && <span className="error-message-radio">{error}</span>}
     </label>
   );
 };

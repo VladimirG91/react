@@ -7,8 +7,8 @@ interface ICardProps {
   description?: string;
   releaseDate?: string;
   genre?: string;
-  viewed?: string;
-  image?: File;
+  viewed?: boolean;
+  imageUrl?: string;
 }
 
 const Card: React.FC<ICardProps> = ({
@@ -19,7 +19,7 @@ const Card: React.FC<ICardProps> = ({
   releaseDate,
   genre,
   viewed,
-  image,
+  imageUrl,
 }) => {
   const [isLiked, setIsLiked] = useState(propIsLiked || false);
   const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
@@ -32,17 +32,13 @@ const Card: React.FC<ICardProps> = ({
   }, [id]);
 
   useEffect(() => {
-    if (image instanceof File) {
-      const reader = new FileReader();
-      reader.readAsDataURL(image);
-      reader.onloadend = () => {
-        setImageSrc(reader.result as string);
-      };
+    if (imageUrl) {
+      setImageSrc(imageUrl);
     } else {
-      const imageSrc = `/cards-img/${id}.webp`;
-      setImageSrc(imageSrc);
+      const newImageSrc = `/cards-img/${id}.webp`;
+      setImageSrc(newImageSrc);
     }
-  }, [id, image]);
+  }, [imageUrl, id]);
 
   const handleClick = () => {
     localStorage.setItem(`isLiked-${id}`, `${!isLiked}`);
@@ -57,7 +53,8 @@ const Card: React.FC<ICardProps> = ({
       </p>
       <p className="description">{description}</p>
       <p className="genre">Genre:{genre}</p>
-      <p className="viewed">Viewed:{viewed ? 'No' : 'Yes'}</p>
+      <p className="viewed">Viewed:{viewed}</p>
+
       <button className="like-btn" onClick={handleClick}>
         <img
           className="like-btn-img"

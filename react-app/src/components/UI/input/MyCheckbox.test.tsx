@@ -1,16 +1,25 @@
-import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { useForm } from 'react-hook-form';
 
 import { MyCheckbox } from './MyCheckbox';
 
-describe('MyCheckbox', () => {
-  const inputRef = React.createRef<HTMLInputElement>();
+const TestComponent = () => {
+  const { register } = useForm(); // initialize useForm hook
 
+  return (
+    <MyCheckbox
+      spanName="I am not a robot"
+      type={'checkbox'}
+      name={'notRobot'}
+      inputRef={register('notRobot', { required: 'Note that you are not a robot' })}
+      error="Error message"
+    />
+  );
+};
+describe('MyCheckbox', () => {
   it('should render correctly', () => {
-    const { getByLabelText } = render(
-      <MyCheckbox spanName="Checkbox" type="checkbox" name="checkbox" inputRef={inputRef} />
-    );
-    const checkbox = getByLabelText('Checkbox');
+    render(<TestComponent />);
+    const checkbox = screen.getByText('I am not a robot');
     expect(checkbox).toBeInTheDocument();
   });
 });

@@ -10,8 +10,8 @@ interface MySelectProps {
 const MySelect: FC<MySelectProps> = ({ name, genreRef, error }) => {
   return (
     <label>
-      <span>Select a genre:</span>
-      <select {...genreRef} name={name}>
+      <span className="genre">Genre:</span>
+      <select className="genre-select" {...genreRef} name={name}>
         <option value="">--Select a genre--</option>
         <option value="comedy">Comedy</option>
         <option value="drama">Drama</option>

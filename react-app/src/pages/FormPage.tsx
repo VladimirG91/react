@@ -1,5 +1,4 @@
-import React, { useState, useRef } from 'react';
-
+import React, { useRef, useState } from 'react';
 import { Card } from 'components/Card';
 import CardForm, { CardFormFields } from 'components/CardForm';
 
@@ -9,11 +8,11 @@ interface ICardData {
   releaseDate: string;
   genre: string;
   notRobot?: boolean;
-  viewed?: string;
-  image?: File;
+  viewed?: boolean;
+  imageUrl?: string;
 }
 
-function FormPage() {
+const FormPage: React.FC<ICardData> = () => {
   const [cardData, setCardData] = useState<ICardData[]>([]);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -24,9 +23,10 @@ function FormPage() {
       releaseDate = '',
       genre = '',
       notRobot = false,
-      viewed = 'yes',
-      image,
+      viewed,
+      imageUrl,
     } = data;
+
     const newCardData: ICardData = {
       title,
       description,
@@ -34,9 +34,9 @@ function FormPage() {
       genre,
       notRobot,
       viewed,
-      image,
+      imageUrl,
     };
-    setCardData((prevCardData) => [...prevCardData, newCardData]);
+    setCardData((prevState) => [...prevState, newCardData]);
   };
 
   return (
@@ -53,12 +53,12 @@ function FormPage() {
             releaseDate={card.releaseDate}
             genre={card.genre}
             viewed={card.viewed}
-            image={card.image}
+            imageUrl={card.imageUrl}
           />
         ))}
       </div>
     </div>
   );
-}
+};
 
 export { FormPage };

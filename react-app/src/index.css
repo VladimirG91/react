@@ -524,7 +524,8 @@ body {
   max-width: 1160px;
   margin: 0 auto;
 }
-input {
+input,
+select {
   font-family: 'Andika', 'Roboto';
 }
 
@@ -738,6 +739,7 @@ span {
   margin-right: 10px;
   width: 400px;
   border-radius: 15px;
+  border: 2px solid gray;
 }
 
 .view-vars {
@@ -788,6 +790,11 @@ form {
   right: 140px;
   color: red;
 }
+.error-message-radio {
+  position: absolute;
+  right: -161px;
+  color: red;
+}
 
 .message {
   position: absolute;
@@ -795,4 +802,21 @@ form {
   bottom: -40px;
   left: 374px;
   color: rgb(29, 155, 240);
+}
+
+select {
+  background: transparent;
+  color: white;
+}
+
+select option {
+  background: transparent;
+  color: black;
+  font-weight: 500;
+}
+
+.about-us {
+  padding-top: 80px;
+  display: flex;
+  justify-content: center;
 }

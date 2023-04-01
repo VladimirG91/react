@@ -1,9 +1,7 @@
-import React from 'react';
-
 function AboutPage() {
   return (
     <div className="wrapper">
-      <p>React project</p>
+      <p className="about-us">About Us</p>
     </div>
   );
 }
