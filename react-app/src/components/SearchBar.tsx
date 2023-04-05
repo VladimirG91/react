@@ -7,8 +7,10 @@ function SearchBar() {
   });
 
   useEffect(() => {
-    localStorage.setItem('searchValue', value);
-  }, [value]);
+    return () => {
+      localStorage.setItem('searchValue', value);
+    };
+  });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
