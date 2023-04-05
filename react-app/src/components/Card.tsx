@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-interface ICardProps {
+export interface ICardProps {
   isLiked?: boolean;
   id?: string;
   title?: string;
@@ -9,6 +9,7 @@ interface ICardProps {
   genre?: string;
   viewed?: boolean;
   imageUrl?: string;
+  imageSrc?: string;
 }
 
 const Card: React.FC<ICardProps> = ({
@@ -20,9 +21,10 @@ const Card: React.FC<ICardProps> = ({
   genre,
   viewed,
   imageUrl,
+  imageSrc,
 }) => {
   const [isLiked, setIsLiked] = useState(propIsLiked || false);
-  const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
+  const [imageDataSrc, setImageDataSrc] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const localValue = localStorage.getItem(`isLiked-${id}`);
@@ -33,12 +35,12 @@ const Card: React.FC<ICardProps> = ({
 
   useEffect(() => {
     if (imageUrl) {
-      setImageSrc(imageUrl);
+      setImageDataSrc(imageUrl);
     } else {
-      const newImageSrc = `/cards-img/${id}.webp`;
-      setImageSrc(newImageSrc);
+      const newImageSrc = imageSrc;
+      setImageDataSrc(newImageSrc);
     }
-  }, [imageUrl, id]);
+  }, [imageUrl, id, imageSrc]);
 
   const handleClick = () => {
     localStorage.setItem(`isLiked-${id}`, `${!isLiked}`);
@@ -47,7 +49,7 @@ const Card: React.FC<ICardProps> = ({
 
   return (
     <div className="card" data-testid="card">
-      <img className="card-img" width={228} height={340} src={imageSrc} alt="card-img" />
+      <img className="card-img" width={228} height={340} src={imageDataSrc} alt="card-img" />
       <p className="title">
         {title} ({releaseDate?.slice(0, 4)})
       </p>

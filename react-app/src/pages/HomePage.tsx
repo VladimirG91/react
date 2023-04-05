@@ -1,18 +1,30 @@
+import { useEffect, useState } from 'react';
+
 import { SearchBar } from '../components/SearchBar';
 import { Card } from '../components/Card';
-
-import data from '../components/data/data.json';
+import { ICardProps } from '../components/Card';
 
 function HomePage() {
-  const dataCards = data.movies;
-  const cards = [...Array(dataCards.length)].map((_, index) => (
+  const [dataCards, setDataCards] = useState<ICardProps[]>([]);
+  useEffect(() => {
+    fetch('https://642c494a208dfe25472ca61d.mockapi.io/10_movies')
+      .then((res) => {
+        return res.json();
+      })
+      .then((arr) => {
+        setDataCards(arr);
+      });
+  }, []);
+
+  const cards = dataCards.map((obj) => (
     <Card
-      key={dataCards[index].id}
-      id={dataCards[index].id.toString()}
-      title={dataCards[index].title}
-      description={dataCards[index].description}
-      releaseDate={dataCards[index].releaseDate}
-      genre={dataCards[index].genre}
+      key={obj.id}
+      id={obj.id}
+      title={obj.title}
+      description={obj.description}
+      releaseDate={obj.releaseDate}
+      genre={obj.genre}
+      imageSrc={obj.imageSrc}
     />
   ));
   return (

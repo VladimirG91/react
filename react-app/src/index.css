@@ -730,10 +730,6 @@ span {
   white-space: nowrap;
 }
 
-.genre {
-  width: 100px;
-  white-space: nowrap;
-}
 .genre-select {
   padding-left: 10px;
   margin-right: 10px;
