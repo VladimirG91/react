@@ -1,6 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-function SearchBar() {
+interface ISearchBarProps {
+  onSearch: (searchTerm: string) => void;
+}
+
+function SearchBar(props: ISearchBarProps) {
   const [value, setValue] = useState<string>(() => {
     const searchValue = localStorage.getItem('searchValue');
     return searchValue ? searchValue : '';
@@ -22,21 +26,20 @@ function SearchBar() {
   }, []);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    localStorage.setItem('searchValue', value);
     event.preventDefault();
+    localStorage.setItem('searchValue', value);
+    props.onSearch(value);
   };
 
   return (
     <form className="form-search" onSubmit={handleSubmit}>
-      <label>
-        <input
-          className="form-input"
-          type="text"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
-      </label>
-      <input className="form-btn" type="submit" value="Search" />
+      <input
+        type="text"
+        placeholder="Search"
+        value={value}
+        onChange={(event) => setValue(event.target.value)}
+      />
+      <button type="submit">Search</button>
     </form>
   );
 }

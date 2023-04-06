@@ -1,35 +1,34 @@
-import { useEffect, useState } from 'react';
-
-import { SearchBar } from '../components/SearchBar';
-import { Card } from '../components/Card';
-import { ICardProps } from '../components/Card';
+import { useState } from 'react';
+import { SearchBar } from 'components/SearchBar';
+import { Card, ICardProps } from 'components/Card';
 
 const TIMEOUT = 2000;
 function HomePage() {
-  const [dataCards, setDataCards] = useState<ICardProps[]>([]);
+  const [movies, setMovies] = useState<ICardProps[]>([]);
   const [loading, setLoading] = useState(false);
-  async function getData() {
+  const [noResults, setNoResults] = useState(false);
+  const handleSearch = async (searchTerm: string) => {
     setLoading(true);
+    setNoResults(false);
     setTimeout(async () => {
       try {
-        await fetch('https://642c494a208dfe25472ca61d.mockapi.io/10_movies')
-          .then((res) => {
-            return res.json();
-          })
-          .then((arr) => {
-            setDataCards(arr);
-          });
+        const response = await fetch(
+          `https://642c494a208dfe25472ca61d.mockapi.io/movies?search=${searchTerm}`
+        );
+        const data = await response.json();
+        if (data.length === 0) {
+          setNoResults(true);
+        }
+        setMovies(data);
+        console.log(data);
         setLoading(false);
       } catch (err) {
         console.log(err);
       }
     }, TIMEOUT);
-  }
-  useEffect(() => {
-    getData();
-  }, []);
+  };
 
-  const cards = dataCards.map((obj) => (
+  const cards = movies.map((obj) => (
     <Card
       key={obj.id}
       id={obj.id}
@@ -40,11 +39,20 @@ function HomePage() {
       imageSrc={obj.imageSrc}
     />
   ));
+
   return (
     <div className="wrapper">
-      <SearchBar />
+      <SearchBar onSearch={handleSearch} />
       <div className="content">
-        {loading ? <h1 className="textLoading">Идет загрузка...</h1> : cards}
+        {loading ? (
+          <h1 className="textLoading">Идет загрузка...</h1>
+        ) : noResults ? (
+          <h1 className="textLoading">
+            По данному запросу ничего не найдено... Попробуйте изменить запрос и повторить попытку!
+          </h1>
+        ) : (
+          cards
+        )}
       </div>
     </div>
   );
