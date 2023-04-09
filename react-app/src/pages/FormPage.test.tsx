@@ -4,14 +4,14 @@ import { Card } from 'components/Card';
 
 describe('FormPage', () => {
   it('renders correctly', () => {
-    render(<FormPage />);
+    render(<FormPage title={''} description={''} releaseDate={''} genre={''} />);
     const FormPageElement = screen.getByText(/Create your own movie collection:/i);
     expect(FormPageElement).toBeInTheDocument();
   });
   it('renders without crashing', () => {
-    render(<FormPage />);
+    render(<FormPage title={''} description={''} releaseDate={''} genre={''} />);
   });
   it('renders correctly', () => {
-    render(<Card />);
+    render(<Card id={''} />);
   });
 });

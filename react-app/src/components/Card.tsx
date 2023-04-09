@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 export interface ICardProps {
   isLiked?: boolean;
-  id?: string;
+  id: string;
   title?: string;
   description?: string;
   releaseDate?: string;
@@ -10,6 +10,10 @@ export interface ICardProps {
   viewed?: boolean;
   imageUrl?: string;
   imageSrc?: string;
+  country?: string;
+  director?: string;
+  scenario?: string;
+  onCardClick?: () => void;
 }
 
 const Card: React.FC<ICardProps> = ({
@@ -19,9 +23,9 @@ const Card: React.FC<ICardProps> = ({
   description,
   releaseDate,
   genre,
-  viewed,
   imageUrl,
   imageSrc,
+  onCardClick,
 }) => {
   const [isLiked, setIsLiked] = useState(propIsLiked || false);
   const [imageDataSrc, setImageDataSrc] = useState<string | undefined>(undefined);
@@ -48,14 +52,13 @@ const Card: React.FC<ICardProps> = ({
   };
 
   return (
-    <div className="card" data-testid="card">
+    <div className="card" data-testid="card" onClick={onCardClick}>
       <img className="card-img" width={228} height={340} src={imageDataSrc} alt="card-img" />
       <p className="title">
         {title} ({releaseDate?.slice(0, 4)})
       </p>
-      <p className="description">{description}</p>
-      <p className="genre">Genre:{genre}</p>
-      <p className="viewed">Viewed:{viewed}</p>
+      <p className="description hide">{description}</p>
+      <p className="genre">Жанр: {genre}</p>
 
       <button className="like-btn" onClick={handleClick}>
         <img

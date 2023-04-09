@@ -20,9 +20,9 @@ function SearchBar(props: ISearchBarProps) {
     if (savedValue) {
       setValue(savedValue);
     }
-    return () => {
-      localStorage.setItem('searchValue', searchRef.current);
-    };
+    // return () => {
+    //   localStorage.setItem('searchValue', searchRef.current);
+    // };
   }, []);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -35,11 +35,11 @@ function SearchBar(props: ISearchBarProps) {
     <form className="form-search" onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="Search"
+        placeholder="Введите название фильма, жанр, или год"
         value={value}
         onChange={(event) => setValue(event.target.value)}
       />
-      <button type="submit">Search</button>
+      <input className="form-btn" type="submit" value="Search" />
     </form>
   );
 }
