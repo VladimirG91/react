@@ -12,23 +12,6 @@ function HomePage() {
   const [noResults, setNoResults] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<ICardProps | null>(null);
 
-  // useEffect(() => {
-  //   const fetchMovies = async () => {
-  //     try {
-  //       const response = await fetch(`https://642c494a208dfe25472ca61d.mockapi.io/movies`);
-  //       const data = await response.json();
-  //       setMovies(data);
-  //     } catch (err) {
-  //       console.log(err);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   setLoading(true);
-  //   fetchMovies();
-  // }, []);
-
   const handleSearch = async (searchTerm: string) => {
     setLoading(true);
     setNoResults(false);
