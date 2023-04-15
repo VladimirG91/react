@@ -1,29 +1,27 @@
-import { render } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { SearchBar } from './SearchBar';
+import { Provider } from 'react-redux';
+import { store } from 'store/store';
 
 describe('SearchBar', () => {
-  it('renders an input field', () => {
-    const { getByRole } = render(
-      <SearchBar
-        onSearch={function (): void {
-          throw new Error('Function not implemented.');
-        }}
-      />
+  it('should render SearchBar', () => {
+    render(
+      <Provider store={store}>
+        <SearchBar onSearch={() => {}} />
+      </Provider>
     );
-    const input = getByRole('textbox');
-    expect(input).toBeInTheDocument();
+    const searchBarElement = screen.getByPlaceholderText('Введите название фильма, жанр, или год');
+    expect(searchBarElement).toBeInTheDocument();
   });
 
-  it('renders a submit button', () => {
-    const { getByRole } = render(
-      <SearchBar
-        onSearch={function (): void {
-          throw new Error('Function not implemented.');
-        }}
-      />
+  it('should update the search value when typing in the input', () => {
+    render(
+      <Provider store={store}>
+        <SearchBar onSearch={() => {}} />
+      </Provider>
     );
-    const submitButton = getByRole('button');
-    expect(submitButton).toBeInTheDocument();
-    expect(submitButton).toHaveAttribute('value', 'Search');
+    const searchBarElement = screen.getByPlaceholderText('Введите название фильма, жанр, или год');
+    fireEvent.change(searchBarElement, { target: { value: 'Harry Potter' } });
+    expect(searchBarElement).toHaveValue('Harry Potter');
   });
 });
