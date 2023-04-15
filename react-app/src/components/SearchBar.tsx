@@ -1,14 +1,13 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'store/store';
+import { useAppDispatch, useAppSelector } from 'hooks';
 import { setValue } from '../store/searchBarSlice';
 interface ISearchBarProps {
   onSearch: (searchTerm: string) => void;
 }
 
 function SearchBar(props: ISearchBarProps) {
-  const dispatch = useDispatch();
-  const value = useSelector((state: RootState) => state.search.value);
+  const dispatch = useAppDispatch();
+  const value = useAppSelector((state) => state.search.value);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     props.onSearch(value);

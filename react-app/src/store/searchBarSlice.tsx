@@ -8,7 +8,6 @@ const searchBarSlice = createSlice({
   reducers: {
     setValue: (state, action: PayloadAction<string>) => {
       state.value = action.payload;
-      console.log('action payload', action.payload);
     },
   },
 });

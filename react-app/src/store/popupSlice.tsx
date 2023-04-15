@@ -1,14 +1,13 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { ICardProps } from 'components/Card';
+import { MoviesState } from './moviesSlice';
 
-export const fetchMovies = createAsyncThunk(
-  'movies/fetchMovies',
-  async function (searchValue: string | number, { rejectWithValue }) {
+export const fetchPopupMovie = createAsyncThunk(
+  'movies/fetchPopupMovie',
+  async function (id: string, { rejectWithValue }) {
     try {
-      const response = await fetch(
-        `https://642c494a208dfe25472ca61d.mockapi.io/movies?search=${searchValue}`
-      );
+      const response = await fetch(`https://642c494a208dfe25472ca61d.mockapi.io/movies/${id}`);
       if (!response.ok) {
         throw new Error('Server Error!');
       }
@@ -20,20 +19,14 @@ export const fetchMovies = createAsyncThunk(
   }
 );
 
-export interface MoviesState {
-  movies: ICardProps[];
-  status: null | string;
-  error: null | string;
-}
-
 const initialState: MoviesState = {
   movies: [],
   status: null,
   error: null,
 };
 
-const moviesSlice = createSlice({
-  name: 'movies',
+const popupSlice = createSlice({
+  name: 'movie',
   initialState,
   reducers: {
     setMovie: (state, action: PayloadAction<ICardProps[]>) => {
@@ -41,21 +34,21 @@ const moviesSlice = createSlice({
     },
   },
   extraReducers: {
-    [fetchMovies.pending.type]: (state: MoviesState) => {
+    [fetchPopupMovie.pending.type]: (state: MoviesState) => {
       state.status = 'loading';
       state.error = null;
     },
-    [fetchMovies.fulfilled.type]: (state: MoviesState, action: PayloadAction<ICardProps[]>) => {
+    [fetchPopupMovie.fulfilled.type]: (state: MoviesState, action: PayloadAction<ICardProps[]>) => {
       state.status = 'resolved';
       state.movies = action.payload;
     },
-    [fetchMovies.rejected.type]: (state: MoviesState, action: PayloadAction<string>) => {
+    [fetchPopupMovie.rejected.type]: (state: MoviesState, action: PayloadAction<string>) => {
       state.status = 'rejected';
       state.error = action.payload;
     },
   },
 });
 
-export const setMovie = moviesSlice.actions;
+export const setMovie = popupSlice.actions;
 
-export default moviesSlice.reducer;
+export default popupSlice.reducer;

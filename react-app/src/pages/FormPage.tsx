@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'store/store';
+import { useAppDispatch, useAppSelector } from 'hooks';
 
 import { Card } from 'components/Card';
 import CardForm, { CardFormFields } from 'components/CardForm';
@@ -18,8 +17,8 @@ interface ICardData {
 }
 
 const FormPage: React.FC<ICardData> = () => {
-  const dispatch = useDispatch();
-  const cardData = useSelector((state: RootState) => state.form.cardData);
+  const dispatch = useAppDispatch();
+  const cardData = useAppSelector((state) => state.form.cardData);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const onSubmit = (data: CardFormFields) => {

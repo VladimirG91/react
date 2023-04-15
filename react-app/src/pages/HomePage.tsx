@@ -1,41 +1,28 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'store/store';
-import { setMovies } from 'store/moviesSlice';
+import { useAppDispatch, useAppSelector } from 'hooks';
 
+import { fetchMovies } from 'store/moviesSlice';
 import { SearchBar } from 'components/SearchBar';
 import { Card, ICardProps } from 'components/Card';
 import { Popup } from 'components/Popup';
+import { fetchPopupMovie } from 'store/popupSlice';
 
 const TIMEOUT = 2000;
 
 function HomePage() {
-  const dispatch = useDispatch();
-  const searchValue = useSelector((state: RootState) => state.search.value);
-  const movies = useSelector((state: RootState) => state.movies.movies);
+  const dispatch = useAppDispatch();
+  const searchValue = useAppSelector((state) => state.search.value);
+  const movies = useAppSelector((state) => state.movies.movies);
 
   const [loading, setLoading] = useState(false);
-  const [noResults, setNoResults] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<ICardProps | null>(null);
 
-  const handleSearch = async (searchTerm: string) => {
+  const handleSearch = async (searchValue: string) => {
     setLoading(true);
-    setNoResults(false);
-    setTimeout(async () => {
-      try {
-        const response = await fetch(
-          `https://642c494a208dfe25472ca61d.mockapi.io/movies?search=${searchTerm}`
-        );
-        const data = await response.json();
-        if (data.length === 0) {
-          setNoResults(true);
-        }
-        dispatch(setMovies(data));
-      } catch (err) {
-        console.log(err);
-      } finally {
+    setTimeout(() => {
+      dispatch(fetchMovies(searchValue)).finally(() => {
         setLoading(false);
-      }
+      });
     }, TIMEOUT);
   };
 
@@ -43,31 +30,24 @@ function HomePage() {
     if (searchValue) {
       handleSearch(searchValue);
     } else {
-      const fetchMovies = async () => {
-        try {
-          const response = await fetch(`https://642c494a208dfe25472ca61d.mockapi.io/movies`);
-          const data = await response.json();
-          dispatch(setMovies(data));
-        } catch (err) {
-          console.log(err);
-        } finally {
-          setLoading(false);
-        }
-      };
-
       setLoading(true);
-      fetchMovies();
+      setTimeout(() => {
+        dispatch(fetchMovies('')).finally(() => {
+          setLoading(false);
+        });
+      }, TIMEOUT);
     }
   }, []);
 
-  const handleCardClick = async (id: string) => {
-    try {
-      const response = await fetch(`https://642c494a208dfe25472ca61d.mockapi.io/movies/${id}`);
-      const data = await response.json();
-      setSelectedMovie(data);
-    } catch (err) {
-      console.log(err);
-    }
+  const handleCardClick = (id: string) => {
+    dispatch(fetchPopupMovie(id))
+      .unwrap()
+      .then((data) => {
+        setSelectedMovie(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const closePopup = () => {
@@ -76,14 +56,13 @@ function HomePage() {
 
   const overlay = selectedMovie && <div className="overlay" onClick={closePopup} />;
   const popup = selectedMovie && <Popup isOpen={true} onClose={closePopup} movie={selectedMovie} />;
-
   return (
     <div className="wrapper">
       <SearchBar onSearch={handleSearch} />
       <div className="content">
         {loading ? (
           <h1 className="textLoading">Идет загрузка...</h1>
-        ) : noResults ? (
+        ) : movies.length === 0 ? (
           <h1 className="textLoading">
             По данному запросу ничего не найдено... Попробуйте изменить запрос и повторить попытку!
           </h1>
