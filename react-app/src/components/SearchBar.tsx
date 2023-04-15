@@ -1,33 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
-
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+import { setValue } from '../store/searchBarSlice';
 interface ISearchBarProps {
   onSearch: (searchTerm: string) => void;
 }
 
 function SearchBar(props: ISearchBarProps) {
-  const [value, setValue] = useState<string>(() => {
-    const searchValue = localStorage.getItem('searchValue');
-    return searchValue ? searchValue : '';
-  });
-  const searchRef = useRef<string>('');
-
-  useEffect(() => {
-    searchRef.current = value;
-  }, [value]);
-
-  useEffect(() => {
-    const savedValue = localStorage.getItem('searchValue');
-    if (savedValue) {
-      setValue(savedValue);
-    }
-    // return () => {
-    //   localStorage.setItem('searchValue', searchRef.current);
-    // };
-  }, []);
-
+  const dispatch = useDispatch();
+  const value = useSelector((state: RootState) => state.search.value);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    localStorage.setItem('searchValue', value);
     props.onSearch(value);
   };
 
@@ -37,7 +20,7 @@ function SearchBar(props: ISearchBarProps) {
         type="text"
         placeholder="Введите название фильма, жанр, или год"
         value={value}
-        onChange={(event) => setValue(event.target.value)}
+        onChange={(event) => dispatch(setValue(event.target.value))}
       />
       <input className="form-btn" type="submit" value="Search" />
     </form>

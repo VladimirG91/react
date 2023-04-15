@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+import { setMovies } from 'store/moviesSlice';
 
 import { SearchBar } from 'components/SearchBar';
 import { Card, ICardProps } from 'components/Card';
@@ -7,7 +10,10 @@ import { Popup } from 'components/Popup';
 const TIMEOUT = 2000;
 
 function HomePage() {
-  const [movies, setMovies] = useState<ICardProps[]>([]);
+  const dispatch = useDispatch();
+  const searchValue = useSelector((state: RootState) => state.search.value);
+  const movies = useSelector((state: RootState) => state.movies.movies);
+
   const [loading, setLoading] = useState(false);
   const [noResults, setNoResults] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<ICardProps | null>(null);
@@ -24,7 +30,7 @@ function HomePage() {
         if (data.length === 0) {
           setNoResults(true);
         }
-        setMovies(data);
+        dispatch(setMovies(data));
       } catch (err) {
         console.log(err);
       } finally {
@@ -34,7 +40,6 @@ function HomePage() {
   };
 
   useEffect(() => {
-    const searchValue = localStorage.getItem('searchValue');
     if (searchValue) {
       handleSearch(searchValue);
     } else {
@@ -42,7 +47,7 @@ function HomePage() {
         try {
           const response = await fetch(`https://642c494a208dfe25472ca61d.mockapi.io/movies`);
           const data = await response.json();
-          setMovies(data);
+          dispatch(setMovies(data));
         } catch (err) {
           console.log(err);
         } finally {
