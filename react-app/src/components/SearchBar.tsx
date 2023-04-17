@@ -16,6 +16,7 @@ function SearchBar(props: ISearchBarProps) {
   return (
     <form className="form-search" onSubmit={handleSubmit}>
       <input
+        className="form-input"
         type="text"
         placeholder="Введите название фильма, жанр, или год"
         value={value}
