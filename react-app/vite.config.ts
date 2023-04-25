@@ -13,4 +13,8 @@ export default defineConfig({
     setupFiles: './src/setupTests.ts',
     css: true,
   },
+  build: {
+    assetsDir: '',
+    minify: false,
+  },
 });

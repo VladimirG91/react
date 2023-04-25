@@ -7,7 +7,8 @@ import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.hydrateRoot(
+  document.getElementById('root') as HTMLElement,
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>

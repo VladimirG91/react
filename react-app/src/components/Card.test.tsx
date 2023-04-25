@@ -5,8 +5,9 @@ describe('Card', () => {
   it('have img with alt, title, description', () => {
     const img = 'card-img';
     const title = 'title';
+    const id = 'id';
     const description = 'description';
-    const { getByText } = render(<Card title={title} description={description} />);
+    const { getByText } = render(<Card id={id} title={title} description={description} />);
     expect(getByText(description)).toBeInTheDocument();
     expect(screen.getByAltText(img)).toBeInTheDocument();
   });
