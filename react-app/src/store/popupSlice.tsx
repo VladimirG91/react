@@ -5,17 +5,13 @@ import { MoviesState } from './moviesSlice';
 
 export const fetchPopupMovie = createAsyncThunk(
   'movies/fetchPopupMovie',
-  async function (id: string, { rejectWithValue }) {
-    try {
-      const response = await fetch(`https://642c494a208dfe25472ca61d.mockapi.io/movies/${id}`);
-      if (!response.ok) {
-        throw new Error('Server Error!');
-      }
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      return rejectWithValue(error as string);
+  async function (id: string) {
+    const response = await fetch(`https://642c494a208dfe25472ca61d.mockapi.io/movies/${id}`);
+    if (!response.ok) {
+      throw new Error('Server Error!');
     }
+    const data = await response.json();
+    return data;
   }
 );
 
@@ -33,19 +29,21 @@ const popupSlice = createSlice({
       state.movies = action.payload;
     },
   },
-  extraReducers: {
-    [fetchPopupMovie.pending.type]: (state: MoviesState) => {
+  extraReducers: (builder) => {
+    builder.addCase(fetchPopupMovie.pending, (state: MoviesState) => {
       state.status = 'loading';
       state.error = null;
-    },
-    [fetchPopupMovie.fulfilled.type]: (state: MoviesState, action: PayloadAction<ICardProps[]>) => {
-      state.status = 'resolved';
-      state.movies = action.payload;
-    },
-    [fetchPopupMovie.rejected.type]: (state: MoviesState, action: PayloadAction<string>) => {
+    });
+    builder.addCase(
+      fetchPopupMovie.fulfilled,
+      (state: MoviesState, action: PayloadAction<ICardProps[]>) => {
+        state.status = 'resolved';
+        state.movies = action.payload;
+      }
+    );
+    builder.addCase(fetchPopupMovie.rejected, (state: MoviesState) => {
       state.status = 'rejected';
-      state.error = action.payload;
-    },
+    });
   },
 });
 

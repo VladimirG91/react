@@ -18,8 +18,9 @@ const vite: ViteDevServer = await createViteServer({
   server: { middlewareMode: true },
   appType: 'custom',
 });
+app.use(vite.middlewares);
 
-app.use('/assets', express.static(path.resolve(__dirname, './dist/client/assets')));
+app.use('/assets', express.static(path.resolve(__dirname, '../dist/client/assets')));
 app.use(async (req, res) => {
   res.write(parts[0]);
   const { render } = await vite.ssrLoadModule('/src/ServerApp.tsx');
