@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "npm run build:client && npm run build:server",
-    "build:client": "vite build --outDir ./dist/client",
-    "build:server": "vite build --outDir ./dist/server --ssr src/ServerApp.tsx",
+    "build:client": "vite build --ssrManifest --outDir dist/client ",
+    "build:server": "vite build --ssr src/ServerApp.tsx --outDir dist/server ",
     "preview": "vite preview",
     "lint": "eslint --ext .ts,.tsx src",
     "lint:fix": "eslint src --ext .ts,.js,.tsx --fix",
