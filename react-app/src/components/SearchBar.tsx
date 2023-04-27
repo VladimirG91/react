@@ -1,26 +1,39 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { setValue } from '../store/searchBarSlice';
-interface ISearchBarProps {
-  onSearch: (searchTerm: string) => void;
-}
+import { fetchMovies } from 'store/moviesSlice';
 
-function SearchBar(props: ISearchBarProps) {
+function SearchBar() {
   const dispatch = useAppDispatch();
   const value = useAppSelector((state) => state.search.value);
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const changeSearchValue = (str: string) => {
+    dispatch(setValue(str));
+  };
+
+  const requestToApi = async () => {
+    const searchQuery = value ? value : '';
+    dispatch(fetchMovies(searchQuery));
+  };
+
+  useEffect(() => {
+    requestToApi();
+    console.log('search');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    props.onSearch(value);
+    requestToApi();
   };
 
   return (
-    <form className="form-search" onSubmit={handleSubmit}>
+    <form className="form-search" onSubmit={(e) => handleSubmit(e)}>
       <input
         className="form-input"
         type="text"
         placeholder="Введите название фильма, жанр, или год"
         value={value}
-        onChange={(event) => dispatch(setValue(event.target.value))}
+        onChange={(event) => changeSearchValue(event.target.value)}
       />
       <input className="form-btn" type="submit" value="Search" />
     </form>

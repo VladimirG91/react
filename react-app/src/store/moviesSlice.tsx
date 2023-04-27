@@ -20,12 +20,14 @@ export interface MoviesState {
   movies: ICardProps[];
   status: null | string;
   error: null | string;
+  isLoading?: boolean;
 }
 
 const initialState: MoviesState = {
   movies: [],
   status: null,
   error: null,
+  isLoading: true,
 };
 
 const moviesSlice = createSlice({
@@ -40,20 +42,23 @@ const moviesSlice = createSlice({
     builder.addCase(fetchMovies.pending, (state: MoviesState) => {
       state.status = 'loading';
       state.error = null;
+      state.isLoading = true;
     });
     builder.addCase(
       fetchMovies.fulfilled,
       (state: MoviesState, action: PayloadAction<ICardProps[]>) => {
         state.status = 'resolved';
         state.movies = action.payload;
+        state.isLoading = false;
       }
     );
     builder.addCase(fetchMovies.rejected, (state: MoviesState) => {
       state.status = 'rejected';
+      state.isLoading = false;
     });
   },
 });
 
-export const setMovie = moviesSlice.actions;
+// export const setMovie = moviesSlice.actions;
 
 export default moviesSlice.reducer;
