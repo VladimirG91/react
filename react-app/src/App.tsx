@@ -4,6 +4,7 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { Route, Routes } from 'react-router-dom';
 import { Header } from './components/Header';
 import { FormPage } from './pages/FormPage';
+import './index.css';
 
 function App() {
   return (

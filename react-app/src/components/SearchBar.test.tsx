@@ -1,13 +1,14 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { SearchBar } from './SearchBar';
 import { Provider } from 'react-redux';
-import { store } from 'store/store';
+import { setupStore } from 'store/store';
 
 describe('SearchBar', () => {
+  const store = setupStore();
   it('should render SearchBar', () => {
     render(
       <Provider store={store}>
-        <SearchBar onSearch={() => {}} />
+        <SearchBar />
       </Provider>
     );
     const searchBarElement = screen.getByPlaceholderText('Введите название фильма, жанр, или год');
@@ -17,7 +18,7 @@ describe('SearchBar', () => {
   it('should update the search value when typing in the input', () => {
     render(
       <Provider store={store}>
-        <SearchBar onSearch={() => {}} />
+        <SearchBar />
       </Provider>
     );
     const searchBarElement = screen.getByPlaceholderText('Введите название фильма, жанр, или год');

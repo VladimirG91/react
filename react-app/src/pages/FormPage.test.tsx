@@ -1,10 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { store } from 'store/store';
+import { setupStore } from 'store/store';
 import { FormPage } from './FormPage';
 import { Card } from 'components/Card';
 
 describe('FormPage', () => {
+  const store = setupStore();
   it('should render the form header', () => {
     render(
       <Provider store={store}>

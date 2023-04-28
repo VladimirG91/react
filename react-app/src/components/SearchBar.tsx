@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { setValue } from '../store/searchBarSlice';
 import { fetchMovies } from 'store/moviesSlice';
@@ -14,12 +14,6 @@ function SearchBar() {
     const searchQuery = value ? value : '';
     dispatch(fetchMovies(searchQuery));
   };
-
-  useEffect(() => {
-    requestToApi();
-    console.log('search');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
