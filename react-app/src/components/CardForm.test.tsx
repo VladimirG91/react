@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import CardForm from './CardForm';
 
 describe('CardForm', () => {
@@ -16,5 +16,7 @@ describe('CardForm', () => {
     expect(getByLabelText('Genre:')).toBeInTheDocument();
     expect(getByLabelText('I am not a robot')).toBeInTheDocument();
     expect(getByLabelText('Upload image')).toBeInTheDocument();
+    const button = screen.getByText(/Add new Card/i);
+    expect(button).toBeInTheDocument();
   });
 });

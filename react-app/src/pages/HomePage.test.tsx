@@ -15,4 +15,17 @@ describe('HomePage', () => {
     const searchBarElement = screen.getByPlaceholderText('Введите название фильма, жанр, или год');
     expect(searchBarElement).toBeInTheDocument();
   });
+
+  it('should display loading message when movies are loading', () => {
+    render(
+      <Provider store={store}>
+        <HomePage />
+      </Provider>
+    );
+
+    store.dispatch({ type: 'movies/fetchMovies/pending' });
+
+    const loadingText = screen.getByText('Идет загрузка...');
+    expect(loadingText).toBeInTheDocument();
+  });
 });
