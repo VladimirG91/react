@@ -10,5 +10,7 @@ describe('NotFoundPage', () => {
     );
     const notFoundElement = screen.getByText(/PAGE NOT FOUND/i);
     expect(notFoundElement).toBeInTheDocument();
+    const go = screen.getByText(/Go to/i);
+    expect(go).toBeInTheDocument();
   });
 });

@@ -12,7 +12,7 @@ const MySelect: FC<MySelectProps> = ({ name, genreRef, error }) => {
     <label>
       <span className="genre">Genre:</span>
       <select className="genre-select" {...genreRef} name={name}>
-        <option value="">--Select a genre--</option>
+        <option>--Select a genre--</option>
         <option value="comedy">Comedy</option>
         <option value="drama">Drama</option>
         <option value="horror">Horror</option>
